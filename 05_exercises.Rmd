@@ -213,7 +213,7 @@ map_of_mallorca <- get_stamenmap(
 ```
 
 
-```{r}
+```{r, eval=FALSE}
 ggmap(map_of_mallorca) +
   geom_path(data = mallorca_bike_day7,
              aes(x = lon, y = lat, 
@@ -233,11 +233,11 @@ labs(title = "Mallorca bike trail",
      x = "",
      y = "")
 
-anim_save("gif1")
+anim_save("gif1.gif")
 ```
 
 ```{r}
-knitr::include_graphics("gif1")
+knitr::include_graphics("gif1.gif")
 ```
   
 
@@ -259,7 +259,7 @@ map_of_panama <- get_stamenmap(
 ```
 
 
-```{r}
+```{r, eval=FALSE}
 ggmap(map_of_panama) +
   geom_path(data = panama,
             aes(color = event),
@@ -291,7 +291,7 @@ knitr::include_graphics("panama.gif")
   
   In the early days the doubling rates were really fast, but later they started to decrease after mask awareness spread.
   
-```{r}
+```{r, eval=FALSE}
 covid_graph <- covid19 %>%
   group_by(state) %>%
   mutate(new_cases_last_week = cases - replace_na(lag(cases, 7, order_by = date), 0)) %>%
@@ -328,7 +328,7 @@ knitr::include_graphics("1.gif")
   * Comment on what you see.  
 
 
-```{r}
+```{r, eval=FALSE}
 states_map <- map_data("state")
 
 census_pop_est_2018 <- read_csv("https://www.dropbox.com/s/6txwv3b4ng7pepe/us_census_2018_state_pop_est.csv?dl=1") %>% 
@@ -348,12 +348,17 @@ ggplot(aes(group = date)) +
   expand_limits(x = states_map$long, y = states_map$lat) + 
   transition_states(date) +
   labs(title = "New Covid cases last week per 10000 residents",
-       subtitle = "date = {frame_along}") 
+       subtitle = "date = {closest_state}") 
 
 animate(census_pop_est_2018, nframes = 200, end_pause = 10)
 
+anim_save("census.gif")
+
 ```
 
+```{r}
+knitr::include_graphics("census.gif")
+```
 
 ## Your first `shiny` app (for next week!)
 
